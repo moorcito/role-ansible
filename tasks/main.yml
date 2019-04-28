@@ -10,16 +10,16 @@
     state: latest
   when: ansible_distribution == "Debian"
 
-- name: Add Ansible ppa for Debian servers
-  apt_repository:
-    repo: ppa:ansible/ansible
-  when: ansible_distribution == "Debian"
-
-- name: Add Ansible APT key from keyserver for Ubuntu servers
+- name: Add Ansible APT key from keyserver
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 93C4A3FD7BB9C367
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_os_family == "Debian"
+
+- name: Add Ansible ppa for Debian servers
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+  when: ansible_distribution == "Debian"
 
 - name: Add Ansible repository for Ubuntu servers
   apt_repository:
